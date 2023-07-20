@@ -1,0 +1,916 @@
+main class
+
+package atm;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class ATM {
+	
+	static ArrayList<Customer> customers = new ArrayList<Customer>();
+
+	public static void main(String[] args) {
+		String name;
+		
+		String address;
+		
+		int age;
+		
+		String gender;
+		
+		String nation;
+		
+		int pin;
+		
+		String test;
+		
+		int testpin;
+		Scanner input = new Scanner(System.in);
+		
+		
+		
+		
+		//Customer ahmad = new Customer();
+		//ahmad.setName("Ahmad");
+		//ahmad.setAddress("Amman");
+		//ahmad.setAge(26);
+		//ahmad.setGender("male");
+		//ahmad.setAccounts(2);
+		//ahmad.setNation("Jordan");
+		//ahmad.setPin(1234);
+		//ahmad.setMain(10000);
+		//ahmad.setSaving(2000);
+	
+		
+		//Customer tawfiq = new Customer();
+		//tawfiq.setName("Tawfiq");
+		//tawfiq.setAddress("Amman");
+		//tawfiq.setAge(23);
+		//tawfiq.setAccounts(3);
+		//tawfiq.setGender("male");
+		//tawfiq.setNation("Jordan");
+		//tawfiq.setPin(5678);
+		//tawfiq.setMain(30000);
+		//tawfiq.setSaving(12000);
+		//tawfiq.setInvestment(100000);
+		
+		//Customer sara = new Customer();
+		//sara.setName("Sara");
+		//sara.setAddress("Irbid");
+		//sara.setAge(28);
+		//sara.setAccounts(1);
+		//sara.setGender("female");
+		//sara.setNation("Jordan");
+		//sara.setPin(9123);
+		//sara.setMain(5000);
+		
+		//ArrayList<Customer> customers = new ArrayList<Customer>();
+		
+		//customers.add(ahmad);
+		//customers.add(tawfiq);
+		//customers.add(sara);
+		
+		
+		while (true) {
+			
+		System.out.println("Please enter your Name: ");
+		System.out.println("If you are a new user please enter 'new user' ");
+		test = input.nextLine();
+		if(test.equalsIgnoreCase("new user")) {
+			
+			Customer newUser = New.collect(input);
+			if(Shared.acc.equalsIgnoreCase("Young")) 
+			continue;
+			
+			customers.add(newUser);
+			for (Customer customer:customers) 
+				System.out.println(customer.getName());
+			System.out.println("Information saved successfully");
+			continue;
+		}
+		
+		Customer match = null;
+		String match1 = null;
+		for (Customer customer:customers) {
+			
+			if (test.equals(customer.getName())) {
+				match = customer ;
+				match1=match.getName();
+				break ;
+	}
+}
+		if( match == null) {
+			System.out.println(" The name you entered is incorrect. Please try again");
+		continue;
+		}
+		System.out.println("***********");
+		System.out.println("Please enter your pin: ");
+		testpin = input.nextInt();
+		input.nextLine();
+		
+		if(testpin == match.getPin())
+			System.out.println("Access Granted");
+		else { 
+			System.out.println("Wrong Name or Pin, Try again");
+		continue;
+		}
+		
+		char option;
+		
+		
+		boolean logout = false;
+		
+		Shared.acc = "Main";
+		
+		while(!logout) {
+			System.out.println(""+Shared.acc+" account");
+            System.out.println("Please enter an option in a capital letter: ");
+            System.out.println("U - UserInfo");
+            System.out.println("D - Deposit");
+            System.out.println("W - Withdraw");
+            System.out.println("A - Accounts");
+            System.out.println("C - Check Balance");
+            System.out.println("T - Transfers");
+            System.out.println("L - Logout");
+            option = input.nextLine().charAt(0);
+
+            switch (option) {
+                
+            case 'U':
+                	UserInfo.info(match1 , customers, input);
+                    continue;
+                
+            case 'D':
+                    Deposit.deposit(match1, customers);
+                    continue;
+                
+            case 'W':
+                    Withdraw.withdraw(match1,customers);
+                    continue;
+                
+            case 'C':
+                    Balance.balance( match1, customers);
+                    continue;
+               
+                
+            case 'A':
+            	Accounts.accounts(match1, customers,input);
+            	continue;
+                    
+            case 'T':
+            	Transfer.transfer(match1, customers);
+            	continue;
+            	
+            
+            case 'L':
+                    System.out.println("Logging out...");
+                    
+                    logout = true;
+                    
+                    break;
+               
+            default:
+                    System.out.println("Invalid option. Please try again.");
+                    continue;
+                   
+                    	
+		
+		
+		
+		
+        }
+		}
+			
+		}
+	}
+}
+************************************************************************************		
+		customer class
+package atm;
+
+import java.util.Scanner;
+
+public class Customer {
+	
+	private String name ;
+	
+	private String Address;
+	
+	private int age;
+	
+	private double main = -1;
+	
+	private double saving = -1;
+	
+	private double investment = -1;
+	
+	private int accounts;
+	
+	private String gender;
+ 
+	private String nation;
+	
+	private int pin;
+	
+
+	public int getPin() {
+		return pin;
+	}
+
+	public void setPin(int pin) {
+		this.pin = pin;
+	}
+
+	public String getNation() {
+		return nation;
+	}
+
+	public void setNation(String nation) {
+		this.nation = nation;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getAddress() {
+		return Address;
+	}
+
+	public void setAddress(String address) {
+		Address = address;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
+	public int getAccounts() {
+		return accounts;
+	}
+
+	public void setAccounts(int accounts) {
+		this.accounts = accounts;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public double getMain() {
+		return main;
+	}
+
+	public void setMain(double main) {
+		this.main = main;
+	}
+
+	public double getSaving() {
+		return saving;
+	}
+
+	public void setSaving(double saving) {
+		this.saving = saving;
+	}
+
+	public double getInvestment() {
+		return investment;
+	}
+
+	public void setInvestment(double investment) {
+		this.investment = investment;
+	}
+
+	
+
+
+}
+***************************************************************************************
+user info class
+
+package atm;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class UserInfo extends Customer {
+	
+	
+	public  static void info(String name, ArrayList<Customer> customers, Scanner input) {
+		
+		for (Customer customer : customers) {
+            if ( name.equalsIgnoreCase(customer.getName())) {
+                System.out.println("The user info for " + name + " is: ");
+                System.out.println("Name: " + customer.getName());
+                System.out.println("Gender: " + customer.getGender());
+                System.out.println("Age: " + customer.getAge());
+                System.out.println("Accounts: " + customer.getAccounts());
+                System.out.println("Address: " + customer.getAddress());
+                if(customer.getMain() > 0)
+                	System.out.println("Main account balance:"+ customer.getMain());
+                else 
+                	System.out.println("You dont have a main account");
+                if(customer.getSaving() > 0)
+                	System.out.println("Saving account balance:"+ customer.getSaving());
+                else 
+                	System.out.println("You dont have a saving account");
+                if(customer.getInvestment() > 0)
+                	System.out.println("Investment account balance:"+ customer.getInvestment());
+                else 
+                	System.out.println("You dont have an investment account account");
+                
+                return;
+		
+		
+		
+		
+		
+	}
+}
+}
+}
+*******************************************************************************************
+deposit class 
+
+package atm;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Deposit extends Customer {
+	
+	
+	public static void deposit(String name, ArrayList<Customer> customers) {
+		
+			Scanner input = new Scanner(System.in);
+        	
+			double money;
+			
+			double updated;
+			
+			for (Customer customer : customers) {
+            
+        		if (name.equalsIgnoreCase(customer.getName())) {
+				
+        			System.out.println("Please enter how much money you want to deposit: ");
+        			
+        			money = input.nextInt();
+        			
+        			input.nextLine();
+        			
+        			if(Shared.acc.equalsIgnoreCase("Main")){
+        			 
+        			System.out.println(" Your balance before the deposit is: "+ customer.getMain());
+        		
+        			updated = customer.getMain() + money;
+        			
+        			customer.setMain(updated);
+        		
+        			System.out.println("Your balance after the deposit is: "+ customer.getMain());
+        		}	
+				
+        			if(Shared.acc.equalsIgnoreCase("Saving")){
+           			 
+            			System.out.println(" Your balance before the deposit is: "+ customer.getSaving());
+            		
+            			updated = customer.getSaving() + money;
+            			
+            			customer.setSaving(updated);
+            		
+            			System.out.println("Your balance after the deposit is: "+ customer.getSaving());
+            		}	
+
+        			
+        			if(Shared.acc.equalsIgnoreCase("Investment")){
+           			 
+            			System.out.println(" Your balance before the deposit is: "+ customer.getInvestment());
+            		
+            			updated = customer.getInvestment() + money;
+            			
+            			customer.setInvestment(updated);
+            		
+            			System.out.println("Your balance after the deposit is: "+ customer.getInvestment());
+            		}	
+    				
+				
+				
+			}
+		
+		
+		
+		
+		
+	}
+
+}
+}
+******************************************************************** 
+withdraw class
+
+package atm;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Withdraw extends Customer {
+	
+	public static void withdraw(String name, ArrayList<Customer> customers) {
+		
+
+		Scanner input = new Scanner(System.in);
+		
+		double with;
+		
+		double updated;
+		
+		for (Customer customer : customers) {
+            
+			if (name.equalsIgnoreCase(customer.getName())) {
+				
+					
+					System.out.println("Please enter how much you want to withdraw: ");
+					
+					with = input.nextInt();
+					
+					input.nextLine();
+					
+					if(Shared.acc.equalsIgnoreCase("Main") && with > customer.getMain()) {
+						
+						System.out.println("Insuffiecent Balance.");
+						
+						break;
+					}
+						
+					if(Shared.acc.equalsIgnoreCase("Main")) {
+						
+					
+					System.out.println("Your balance before the withdraw is: "+ customer.getMain());
+					
+					updated = customer.getMain() - with;
+					
+					customer.setMain(updated);
+					
+					System.out.println("Your balance after the withdraw is: "+ customer.getMain());
+					
+			}
+					
+
+					if(Shared.acc.equalsIgnoreCase("Saving") && with > customer.getSaving()) { 
+						
+						System.out.println("Insuffiecent Balance.");
+						break;
+					}
+						
+					if(Shared.acc.equalsIgnoreCase("Saving")) {
+						
+					
+					System.out.println("Your balance before the withdraw is: "+ customer.getSaving());
+					
+					updated = customer.getSaving() - with;
+					
+					customer.setSaving(updated);
+					
+					System.out.println("Your balance after the withdraw is: "+ customer.getSaving());
+					
+			}
+					
+
+					if(Shared.acc.equalsIgnoreCase("Investment") && with > customer.getInvestment()) {
+						
+						System.out.println("Insuffiecent Balance.");
+						
+						break;
+			}
+					if(Shared.acc.equalsIgnoreCase("Investment")) {
+						
+					
+					System.out.println("Your balance before the withdraw is: "+ customer.getInvestment());
+					
+					updated = customer.getInvestment() - with;
+					
+					customer.setInvestment(updated);
+					
+					System.out.println("Your balance after the withdraw is: "+ customer.getInvestment());
+					
+			}
+			}
+		
+		
+		
+		
+		
+	}
+
+}
+}
+*****************************************************************************************************
+check balance class
+
+package atm;
+
+import java.util.ArrayList;
+
+public class Balance extends Customer {
+	
+	
+	public static void balance (String name, ArrayList<Customer> customers) {
+		
+		for (Customer customer : customers) {
+            
+			if (name.equalsIgnoreCase(customer.getName())) {
+				
+				if(Shared.acc.equalsIgnoreCase("Main")) {
+       
+            	System.out.println("Your balance is: "+ customer.getMain());
+				
+				}
+				
+				if (Shared.acc.equalsIgnoreCase("Saving")) {
+					
+				System.out.println("Your balance is: "+customer.getSaving());
+				
+				}
+				
+				if(Shared.acc.equalsIgnoreCase("Investment")) {
+					
+					System.out.println(" Your balance is: "+customer.getInvestment());
+					
+				}
+       
+                return;
+            }
+        }
+		
+		
+		
+	}
+	
+
+}
+**************************************************************************************************8
+accounts class
+
+package atm;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+
+
+public class Accounts extends Customer {
+	
+	Scanner input1 = new Scanner(System.in);
+	
+	public static  String accounts(String name, ArrayList<Customer> customers, Scanner input1) {
+		
+		
+		
+		char choice;
+		
+		for (Customer customer : customers) {
+			
+			
+				
+			
+			if (name.equalsIgnoreCase(customer.getName())) {
+				
+				System.out.println("Please choose an account: ");
+				System.out.println("M for Main account:");
+				System.out.println("S for Saving account:");
+				System.out.println("I for Investment account:");
+				choice = input1.nextLine().charAt(0);
+				
+				switch (choice) {
+				
+				case 'M':
+					
+					if(customer.getMain() < 0) {
+						System.out.println("You dont have a Main account");
+						return Shared.acc;
+					}
+						
+					else {
+						
+						return Shared.acc="Main";
+					}
+				case 'S':
+					
+					if(customer.getSaving() < 0) {
+						System.out.println("You dont have a Saving account");
+						return Shared.acc;
+					}
+					else {
+						Shared.acc = "Saving";
+						
+						
+						
+						return Shared.acc = "Saving";
+					}
+				case 'I':
+					if(customer.getInvestment() < 0) {
+						System.out.println("You dont have an Investment account");
+						return Shared.acc;
+					}
+					else {
+						Shared.acc = "Investment";
+						
+						
+					
+						return Shared.acc = "Investment";
+					}
+				
+				}
+				}
+				
+				
+				
+				
+			}
+			
+			
+			
+			
+		
+	return Shared.acc = "Main";	
+	}	
+
+}
+
+			**********************************************************************************************
+new user class
+
+package atm;
+
+import java.util.Scanner;
+
+public class New extends Customer {
+	
+	
+
+	Scanner input = new Scanner(System.in);
+	
+	public static Customer collect(Scanner input) {
+		
+		boolean young = false;
+	    
+	    Customer newuser = new Customer();
+
+	    System.out.println("Please enter your name:");
+	    String name = input.nextLine();
+
+	    System.out.println("Please enter your age:");
+	    int age = input.nextInt();
+	    input.nextLine(); 
+	    if(age < 18 ) {
+	    	
+	    	System.out.println("Too young to have a bank account");
+	    	Shared.acc="Young";
+	    	return null;
+	    }
+	    	
+
+	    System.out.println("Please enter your address:");
+	    String address = input.nextLine();
+
+	    System.out.println("Please enter your gender:");
+	    String gender = input.nextLine();
+
+	    System.out.println("Please enter your nationality:");
+	    String nationality = input.nextLine();
+	    while(true) {
+	    System.out.println("Please enter your pin from 4 numbers:");
+	    int pin1 = input.nextInt();
+	    input.nextLine(); 
+	   if( pin1 > 9999) {
+		   System.out.println("Pin is larger than 4 numbers. Try again");
+		   continue;
+	   }
+	   if(pin1<1000) {
+		   System.out.println("Pin is smaller than 4 numbers. Try again");
+		   continue;
+	   }
+	    newuser.setPin(pin1);
+	    break;
+	    }
+	    System.out.println("Please enter your balance in your main account:");
+	    System.out.println("If you don't have a main account, please enter a negative number:");
+	    double main = input.nextDouble();
+	    input.nextLine(); 
+
+	    System.out.println("Please enter your balance in your saving account:");
+	    System.out.println("If you don't have a saving account, please enter a negative number:");
+	    double saving = input.nextDouble();
+	    input.nextLine(); 
+
+	    System.out.println("Please enter your balance in your investment account:");
+	    System.out.println("If you don't have an investment account, please enter a negative number:");
+	    double investment = input.nextDouble();
+	    input.nextLine(); 
+
+	    System.out.println("Please enter how many accounts you have:");
+	    int accounts = input.nextInt();
+	    input.nextLine(); 
+
+	    
+	    newuser.setName(name);
+	    newuser.setAge(age);
+	    newuser.setAccounts(accounts);
+	    newuser.setSaving(saving);
+	    newuser.setMain(main);
+	    newuser.setInvestment(investment);
+	    newuser.setAddress(address);
+	    newuser.setGender(gender);
+	    newuser.setNation(nationality);
+
+	    
+	    return newuser;
+	}
+
+	
+
+}
+*********************************************************************************************
+transfer class 
+
+package atm;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+public class Transfer  extends Customer {
+
+	
+	public static void transfer(String name, ArrayList<Customer> customers) {
+		
+		Scanner input = new Scanner(System.in);
+		
+		boolean correct=false;
+		 
+		double temp;
+		
+		String acctrans;
+		
+		String account;
+		
+		Customer to = null;
+		
+		double transfer;
+	 
+		Customer sender = null;
+		for (Customer c : customers) {
+	        if (name.equals(c.getName())) {
+	            sender = c;
+	            break;
+	            
+	        }
+	        
+	    }
+		
+		System.out.println("Please enter the name you want to transfer for: ");
+		acctrans = input.nextLine();
+		
+for (Customer c : customers) {
+            
+			if (acctrans.equals(c.getName())) {
+				
+					
+					System.out.println("Customer name is correct");
+					correct = true;
+					to = c;
+					break;
+			}
+}
+		if(correct == false ) {
+			System.out.println("No customer by this name: "+ acctrans);
+		
+			return;
+		}
+
+		System.out.println("From which account do you want to transfer: ");
+		account = input.nextLine();
+		if(account.equalsIgnoreCase("main") && sender.getMain() < 0) {
+			System.out.println("You dont have a main account ");
+			return;
+		}
+		if(account.equalsIgnoreCase("saving") && sender.getSaving() < 0) {
+			System.out.println("You dont have a saving account ");
+			return;
+		}
+		
+		if(account.equalsIgnoreCase("investment") && sender.getInvestment() < 0) {
+			System.out.println("You dont have an Investment account ");
+			return;
+		}
+		
+		
+		
+		
+		
+		
+		while(true) {
+			
+			System.out.println("How much do you want to transfer and to which account: ");
+			transfer = input.nextDouble();
+			input.nextLine();
+		
+		
+		if(account.equalsIgnoreCase("main") && transfer > sender.getMain() ) {
+			
+			System.out.println("Insuffcient balance. Please try a different amount");
+			continue;
+			
+		}
+		
+		if(account.equalsIgnoreCase("Main")) {
+			temp = sender.getMain();
+			sender.setMain(sender.getMain() - transfer);
+			to.setMain(to.getMain()+transfer);
+			System.out.println("Transfer successfully");
+			System.out.println("your balance before the transfer is: "+temp);
+			System.out.println("your balance after the transfer is: "+sender.getMain());
+			return;
+		}
+			
+if(account.equalsIgnoreCase("Saving") && transfer > sender.getSaving() ) {
+			
+			System.out.println("Insuffcient balance. Please try a different amount");
+			continue;
+			
+		}
+		
+		if(account.equalsIgnoreCase("Saving")) {
+			temp=sender.getSaving();
+			
+			sender.setSaving(sender.getSaving() - transfer);
+			to.setMain(to.getMain() + transfer);
+			System.out.println("Transfer successfully");
+		System.out.println("your balance before the transfer is: "+temp);
+		System.out.println("your balance after the transfer is: "+sender.getSaving());
+			return;
+		}
+		
+if(account.equalsIgnoreCase("Investment") && transfer > sender.getInvestment() ) {
+			
+			System.out.println("Insuffcient balance. Please try a different amount");
+			continue;
+			
+		}
+		
+		if(account.equalsIgnoreCase("Investment")) {
+			temp = sender.getInvestment();
+			sender.setInvestment(sender.getInvestment() - transfer);
+			to.setMain(to.getMain() + transfer);
+			System.out.println("Transfer successfully");
+			System.out.println("your balance before the transfer is: "+temp);
+			System.out.println("your balance after the transfer is: "+sender.getInvestment());
+			return;
+		}
+		
+	
+		}
+}	
+		
+	
+	
+	}
+
+***************************************************************************************
+shared class
+
+package atm;
+
+public class Shared {
+
+	public static String acc = "main";
+	
+}
+
+		 
+		
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		
+		
+	
+
